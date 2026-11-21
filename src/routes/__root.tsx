@@ -75,22 +75,32 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
-    // Replace these placeholders with the app's name and description when first building the app.
-    // Each content route, / included, must still set its own head(). Never add og:image or
-    // twitter:image here: every page without its own would inherit the root's preview image.
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "OpenCrewBot 2.0 — Autonomous AI Workforce Management" },
+      {
+        name: "description",
+        content:
+          "OpenCrewBot 2.0 enterprise command centre for managing autonomous AI agent teams, collaboration rooms, task execution, skills, memory, and sensitive approvals.",
+      },
+      { name: "author", content: "EDXSO & OpenCrewBot" },
+      { property: "og:title", content: "OpenCrewBot 2.0 — Autonomous AI Workforce Management" },
+      {
+        property: "og:description",
+        content:
+          "Enterprise command centre for managing autonomous AI agent teams, collaboration rooms, task execution, skills, memory, and sensitive approvals.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400;500;600&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,

@@ -10,33 +10,206 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AgentsRouteImport } from './routes/agents'
+import { Route as AnalyticsRouteImport } from './routes/analytics'
+import { Route as ApprovalsRouteImport } from './routes/approvals'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
+import { Route as MemoryRouteImport } from './routes/memory'
+import { Route as ModelsRouteImport } from './routes/models'
+import { Route as RoomsRouteImport } from './routes/rooms'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as WorkflowsRouteImport } from './routes/workflows'
+import { Route as WorkspaceRouteImport } from './routes/workspace'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRoute = AnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApprovalsRoute = ApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemoryRoute = MemoryRouteImport.update({
+  id: '/memory',
+  path: '/memory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelsRoute = ModelsRouteImport.update({
+  id: '/models',
+  path: '/models',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoomsRoute = RoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SkillsRoute = SkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkflowsRoute = WorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkspaceRoute = WorkspaceRouteImport.update({
+  id: '/workspace',
+  path: '/workspace',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/analytics': typeof AnalyticsRoute
+  '/approvals': typeof ApprovalsRoute
+  '/history': typeof HistoryRoute
+  '/integrations': typeof IntegrationsRoute
+  '/memory': typeof MemoryRoute
+  '/models': typeof ModelsRoute
+  '/rooms': typeof RoomsRoute
+  '/settings': typeof SettingsRoute
+  '/skills': typeof SkillsRoute
+  '/tasks': typeof TasksRoute
+  '/workflows': typeof WorkflowsRoute
+  '/workspace': typeof WorkspaceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/analytics': typeof AnalyticsRoute
+  '/approvals': typeof ApprovalsRoute
+  '/history': typeof HistoryRoute
+  '/integrations': typeof IntegrationsRoute
+  '/memory': typeof MemoryRoute
+  '/models': typeof ModelsRoute
+  '/rooms': typeof RoomsRoute
+  '/settings': typeof SettingsRoute
+  '/skills': typeof SkillsRoute
+  '/tasks': typeof TasksRoute
+  '/workflows': typeof WorkflowsRoute
+  '/workspace': typeof WorkspaceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/analytics': typeof AnalyticsRoute
+  '/approvals': typeof ApprovalsRoute
+  '/history': typeof HistoryRoute
+  '/integrations': typeof IntegrationsRoute
+  '/memory': typeof MemoryRoute
+  '/models': typeof ModelsRoute
+  '/rooms': typeof RoomsRoute
+  '/settings': typeof SettingsRoute
+  '/skills': typeof SkillsRoute
+  '/tasks': typeof TasksRoute
+  '/workflows': typeof WorkflowsRoute
+  '/workspace': typeof WorkspaceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agents'
+    | '/analytics'
+    | '/approvals'
+    | '/history'
+    | '/integrations'
+    | '/memory'
+    | '/models'
+    | '/rooms'
+    | '/settings'
+    | '/skills'
+    | '/tasks'
+    | '/workflows'
+    | '/workspace'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agents'
+    | '/analytics'
+    | '/approvals'
+    | '/history'
+    | '/integrations'
+    | '/memory'
+    | '/models'
+    | '/rooms'
+    | '/settings'
+    | '/skills'
+    | '/tasks'
+    | '/workflows'
+    | '/workspace'
+  id:
+    | '__root__'
+    | '/'
+    | '/agents'
+    | '/analytics'
+    | '/approvals'
+    | '/history'
+    | '/integrations'
+    | '/memory'
+    | '/models'
+    | '/rooms'
+    | '/settings'
+    | '/skills'
+    | '/tasks'
+    | '/workflows'
+    | '/workspace'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentsRoute: typeof AgentsRoute
+  AnalyticsRoute: typeof AnalyticsRoute
+  ApprovalsRoute: typeof ApprovalsRoute
+  HistoryRoute: typeof HistoryRoute
+  IntegrationsRoute: typeof IntegrationsRoute
+  MemoryRoute: typeof MemoryRoute
+  ModelsRoute: typeof ModelsRoute
+  RoomsRoute: typeof RoomsRoute
+  SettingsRoute: typeof SettingsRoute
+  SkillsRoute: typeof SkillsRoute
+  TasksRoute: typeof TasksRoute
+  WorkflowsRoute: typeof WorkflowsRoute
+  WorkspaceRoute: typeof WorkspaceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +221,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approvals': {
+      id: '/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof ApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/memory': {
+      id: '/memory'
+      path: '/memory'
+      fullPath: '/memory'
+      preLoaderRoute: typeof MemoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/models': {
+      id: '/models'
+      path: '/models'
+      fullPath: '/models'
+      preLoaderRoute: typeof ModelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rooms': {
+      id: '/rooms'
+      path: '/rooms'
+      fullPath: '/rooms'
+      preLoaderRoute: typeof RoomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/skills': {
+      id: '/skills'
+      path: '/skills'
+      fullPath: '/skills'
+      preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workflows': {
+      id: '/workflows'
+      path: '/workflows'
+      fullPath: '/workflows'
+      preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workspace': {
+      id: '/workspace'
+      path: '/workspace'
+      fullPath: '/workspace'
+      preLoaderRoute: typeof WorkspaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentsRoute: AgentsRoute,
+  AnalyticsRoute: AnalyticsRoute,
+  ApprovalsRoute: ApprovalsRoute,
+  HistoryRoute: HistoryRoute,
+  IntegrationsRoute: IntegrationsRoute,
+  MemoryRoute: MemoryRoute,
+  ModelsRoute: ModelsRoute,
+  RoomsRoute: RoomsRoute,
+  SettingsRoute: SettingsRoute,
+  SkillsRoute: SkillsRoute,
+  TasksRoute: TasksRoute,
+  WorkflowsRoute: WorkflowsRoute,
+  WorkspaceRoute: WorkspaceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

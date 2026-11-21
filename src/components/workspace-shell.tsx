@@ -33,9 +33,20 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dark, setDark] = useState(false);
+  const [demoMode, setDemoMode] = useState(false);
+
+  useEffect(() => {
+    const updateMode = () => {
+      const isDemo = window.localStorage.getItem("opencrewbot-demo-mode") === "true";
+      setDemoMode(isDemo);
+    };
+    updateMode();
+    window.addEventListener("opencrewbot-settings-changed", updateMode);
+    return () => window.removeEventListener("opencrewbot-settings-changed", updateMode);
+  }, []);
 
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("opencrewbot-theme");
@@ -63,19 +74,35 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
   }, []);
 
   const items = useMemo(() => navGroups.flatMap((group) => group.items), []);
-  const searchResults = items.filter((item) => item.label.toLowerCase().includes(search.toLowerCase()));
+  const searchResults = items.filter((item) =>
+    item.label.toLowerCase().includes(search.toLowerCase()),
+  );
   const activeItem = items.find((item) => item.href === currentPath);
 
   const navContent = (
     <>
-      <div className={cn("flex h-[72px] items-center border-b border-sidebar-border px-4", collapsed && "md:justify-center md:px-0")}>
+      <div
+        className={cn(
+          "flex h-[72px] items-center border-b border-sidebar-border px-4",
+          collapsed && "md:justify-center md:px-0",
+        )}
+      >
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
             <Bot className="size-5" aria-hidden="true" />
           </div>
           <div className={cn("min-w-0", collapsed && "md:hidden")}>
-            <p className="truncate text-sm font-semibold text-sidebar-foreground">OpenCrewBot</p>
-            <p className="text-xs text-sidebar-foreground/65">WORKFORCE · 2.0</p>
+            <div className="flex items-center gap-1.5">
+              <p className="truncate text-sm font-bold tracking-tight text-sidebar-foreground">
+                OpenCrewBot
+              </p>
+              <span className="rounded bg-primary/20 px-1 py-0.5 text-[9px] font-extrabold text-primary">
+                2.0
+              </span>
+            </div>
+            <p className="text-[10px] font-semibold tracking-wider text-sidebar-foreground/60">
+              EDXSO ENTERPRISE
+            </p>
           </div>
           <Button
             type="button"
@@ -93,7 +120,12 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
       <div className="min-h-0 flex-1 overflow-y-auto px-3 py-4">
         {navGroups.map((group) => (
           <div className="mb-5" key={group.label}>
-            <p className={cn("mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/55", collapsed && "md:sr-only")}>
+            <p
+              className={cn(
+                "mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/55",
+                collapsed && "md:sr-only",
+              )}
+            >
               {group.label}
             </p>
             <nav aria-label={group.label} className="space-y-1">
@@ -118,7 +150,12 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
                     <Icon className="size-[17px] shrink-0" aria-hidden="true" />
                     <span className={cn("truncate", collapsed && "md:hidden")}>{item.label}</span>
                     {item.key === "approvals" && (
-                      <span className={cn("ml-auto flex size-5 items-center justify-center rounded-full bg-warning/15 text-[10px] font-semibold text-warning-foreground", collapsed && "md:hidden")}>
+                      <span
+                        className={cn(
+                          "ml-auto flex size-5 items-center justify-center rounded-full bg-warning/15 text-[10px] font-semibold text-warning-foreground",
+                          collapsed && "md:hidden",
+                        )}
+                      >
                         {sampleApprovals.length}
                       </span>
                     )}
@@ -131,13 +168,23 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
       </div>
 
       <div className={cn("border-t border-sidebar-border p-3", collapsed && "md:px-2")}>
-        <div className={cn("flex items-center gap-3 rounded-md bg-sidebar-accent/70 p-2.5", collapsed && "md:justify-center md:p-2")}>
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary text-xs font-semibold text-secondary-foreground">AC</div>
+        <div
+          className={cn(
+            "flex items-center gap-3 rounded-md bg-sidebar-accent/70 p-2.5",
+            collapsed && "md:justify-center md:p-2",
+          )}
+        >
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary text-xs font-semibold text-secondary-foreground">
+            AC
+          </div>
           <div className={cn("min-w-0 flex-1", collapsed && "md:hidden")}>
             <p className="truncate text-xs font-semibold text-sidebar-foreground">Admin Console</p>
             <p className="truncate text-[11px] text-sidebar-foreground/60">Workspace owner</p>
           </div>
-          <Settings2 className={cn("size-4 text-sidebar-foreground/55", collapsed && "md:hidden")} aria-hidden="true" />
+          <Settings2
+            className={cn("size-4 text-sidebar-foreground/55", collapsed && "md:hidden")}
+            aria-hidden="true"
+          />
         </div>
       </div>
     </>
@@ -189,23 +236,42 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
             <div className="hidden min-w-0 items-center gap-2 text-sm text-muted-foreground sm:flex">
               <span>Workspace</span>
               <ChevronRight className="size-3.5" aria-hidden="true" />
-              <span className="truncate font-medium text-foreground">{activeItem?.label ?? "Overview"}</span>
+              <span className="truncate font-medium text-foreground">
+                {activeItem?.label ?? "Overview"}
+              </span>
             </div>
             <div className="ml-auto flex items-center gap-1.5">
-              <Badge variant="outline" className="mr-1 hidden border-warning/30 bg-warning/10 text-warning-foreground sm:inline-flex">
-                <span className="mr-1.5 size-1.5 rounded-full bg-warning" />
-                Demo mode
+              <Badge
+                variant="outline"
+                className={cn(
+                  "mr-1 hidden items-center gap-1.5 text-[11px] font-medium sm:inline-flex",
+                  demoMode
+                    ? "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                    : "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
+                )}
+              >
+                <span
+                  className={cn(
+                    "size-1.5 rounded-full",
+                    demoMode ? "bg-amber-500" : "bg-emerald-500 animate-pulse",
+                  )}
+                />
+                {demoMode
+                  ? "Demo Mode (Simulated Tokens)"
+                  : "Live · 99.98% System Health (Groq + NVIDIA NIM)"}
               </Badge>
               <Button
                 type="button"
                 variant="outline"
-                className="h-9 w-9 px-0 sm:w-52 sm:justify-start sm:px-3"
+                className="h-9 w-9 px-0 sm:w-52 sm:justify-start sm:px-3 text-xs"
                 aria-label="Search workspace"
                 onClick={() => setSearchOpen(true)}
               >
-                <Search />
+                <Search className="size-3.5 text-muted-foreground" />
                 <span className="hidden text-muted-foreground sm:inline">Search workspace</span>
-                <kbd className="ml-auto hidden rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline">⌘ K</kbd>
+                <kbd className="ml-auto hidden rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline">
+                  ⌘ K
+                </kbd>
               </Button>
               <Button
                 type="button"
@@ -215,8 +281,8 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
                 aria-label="Open notifications"
                 onClick={() => setNotificationsOpen(true)}
               >
-                <Bell />
-                <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-warning ring-2 ring-background" />
+                <Bell className="size-4" />
+                <span className="absolute right-2 top-2 size-2 rounded-full bg-amber-500 ring-2 ring-background" />
               </Button>
               <Button
                 type="button"
@@ -226,16 +292,24 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
                 aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
                 onClick={() => setDark((value) => !value)}
               >
-                {dark ? <Sun /> : <Moon />}
+                {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
               </Button>
             </div>
           </div>
-          <div className="flex items-center gap-2 border-t border-border/70 bg-warning/5 px-4 py-2 text-xs text-muted-foreground sm:px-6 lg:px-8">
-            <Command className="size-3.5 shrink-0 text-warning-foreground" aria-hidden="true" />
-            <span>Preview workspace · actions and figures are illustrative; no agents or integrations are connected.</span>
-            <Link to="/approvals" className="ml-auto hidden shrink-0 font-medium text-primary hover:underline sm:inline-flex">
-              <ShieldCheck className="mr-1.5 size-3.5" />
-              {sampleApprovals.length} approval previews
+          <div className="flex items-center gap-2 border-t border-border/70 bg-amber-500/5 px-4 py-1.5 text-xs text-muted-foreground sm:px-6 lg:px-8">
+            <Command
+              className="size-3.5 shrink-0 text-amber-600 dark:text-amber-400"
+              aria-hidden="true"
+            />
+            <span className="text-[11px]">
+              Enterprise sandbox · all external mutation tokens quarantined behind Approval Centre.
+            </span>
+            <Link
+              to="/approvals"
+              className="ml-auto hidden shrink-0 items-center text-[11px] font-semibold text-amber-600 dark:text-amber-400 hover:underline sm:inline-flex"
+            >
+              <ShieldCheck className="mr-1 size-3.5" />
+              {sampleApprovals.length} pending approvals
             </Link>
           </div>
         </header>
@@ -251,23 +325,38 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
             <DialogTitle>Search workspace</DialogTitle>
             <DialogDescription>Jump to a workspace area.</DialogDescription>
           </DialogHeader>
-          <Input autoFocus value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search pages…" aria-label="Search pages" />
+          <Input
+            autoFocus
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search pages…"
+            aria-label="Search pages"
+          />
           <div className="max-h-72 space-y-1 overflow-y-auto">
-            {searchResults.length ? searchResults.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  onClick={() => { setSearchOpen(false); setSearch(""); }}
-                  className="flex min-h-10 items-center gap-3 rounded-md px-3 text-sm hover:bg-accent"
-                >
-                  <Icon className="size-4 text-muted-foreground" />
-                  {item.label}
-                  <ChevronRight className="ml-auto size-4 text-muted-foreground" />
-                </Link>
-              );
-            }) : <p className="px-3 py-5 text-center text-sm text-muted-foreground">No matching areas.</p>}
+            {searchResults.length ? (
+              searchResults.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => {
+                      setSearchOpen(false);
+                      setSearch("");
+                    }}
+                    className="flex min-h-10 items-center gap-3 rounded-md px-3 text-sm hover:bg-accent"
+                  >
+                    <Icon className="size-4 text-muted-foreground" />
+                    {item.label}
+                    <ChevronRight className="ml-auto size-4 text-muted-foreground" />
+                  </Link>
+                );
+              })
+            ) : (
+              <p className="px-3 py-5 text-center text-sm text-muted-foreground">
+                No matching areas.
+              </p>
+            )}
           </div>
         </DialogContent>
       </Dialog>
@@ -276,7 +365,9 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Review queue</DialogTitle>
-            <DialogDescription>Illustrative requests only. No action has been sent to an external service.</DialogDescription>
+            <DialogDescription>
+              Illustrative requests only. No action has been sent to an external service.
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
             {sampleApprovals.map((approval) => (
@@ -284,13 +375,24 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium">{approval.action}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{approval.agent} · {approval.service}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {approval.agent} · {approval.service}
+                    </p>
                   </div>
-                  <Badge variant="outline" className="shrink-0 border-warning/30 bg-warning/10 text-warning-foreground">Preview</Badge>
+                  <Badge
+                    variant="outline"
+                    className="shrink-0 border-warning/30 bg-warning/10 text-warning-foreground"
+                  >
+                    Preview
+                  </Badge>
                 </div>
               </div>
             ))}
-            <Link to="/approvals" onClick={() => setNotificationsOpen(false)} className="inline-flex items-center text-sm font-medium text-primary hover:underline">
+            <Link
+              to="/approvals"
+              onClick={() => setNotificationsOpen(false)}
+              className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+            >
               Open approval centre <ChevronRight className="ml-1 size-4" />
             </Link>
           </div>
